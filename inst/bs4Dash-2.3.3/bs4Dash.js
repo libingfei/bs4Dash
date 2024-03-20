@@ -631,8 +631,8 @@ $.extend(cardSidebarBinding, {
     // Easyclose feature
     if ($(el).attr("data-easy-close") === "true") {
       $(document).mouseup(function(e) {
-        var container = $(".direct-chat-contacts");
-        var openContainer = $(".direct-chat-contacts-open");
+        var container = $(el).find(".direct-chat-contacts"); // 限制在el内部
+        var openContainer = $(el).find(".direct-chat-contacts-open"); // 限制在el内部
         // if the target of the click isn't the container nor a descendant of the container and also not if the filter symbol was clicke  d
         if (!container.is(e.target) && 
             container.has(e.target).length === 0 && 
