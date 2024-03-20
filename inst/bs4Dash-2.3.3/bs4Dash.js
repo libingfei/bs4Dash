@@ -627,22 +627,6 @@ $.extend(cardSidebarBinding, {
         transition: "transform .5s ease-in-out"
       });
     }, 300);
-    
-    // Easyclose feature
-    if ($(el).attr("data-easy-close") === "true") {
-      $(document).mouseup(function(e) {
-        var container = $(el).find(".direct-chat-contacts"); // 限制在el内部
-        var openContainer = $(el).find(".direct-chat-contacts-open"); // 限制在el内部
-        // if the target of the click isn't the container nor a descendant of the container and also not if the filter symbol was clicke  d
-        if (!container.is(e.target) && 
-            container.has(e.target).length === 0 && 
-            $(e.target).parents('.card-tools').length !== 1) {
-            openContainer
-              .find("[data-widget='chat-pane-toggle']")
-              .click();
-        }
-      }); 
-    }
   },
 
   find: function(scope) {
@@ -698,6 +682,22 @@ $.extend(cardSidebarBinding, {
   unsubscribe: function(el) {
     $(el).off(".cardSidebarBinding");
   }
+});
+// Set up easy-close feature outside of the initialize function
+$(document).mouseup(function(e) {
+  $("[data-easy-close='true']").each(function() {
+    var container = $(this).find(".direct-chat-contacts"); // 限制在当前遍历的元素内部
+    var openContainer = $(this).find(".direct-chat-contacts-open"); // 限制在当前遍历的元素内部
+
+    // 检查鼠标抬起的位置是否在 container 外面，并且不是在 .card-tools 内部
+    if (!container.is(e.target) && 
+        container.has(e.target).length === 0 && 
+        $(e.target).parents('.card-tools').length !== 1) {
+      openContainer
+        .find("[data-widget='chat-pane-toggle']")
+        .click(); // 触发关闭或切换逻辑
+    }
+  });
 });
 
 Shiny.inputBindings.register(cardSidebarBinding);
