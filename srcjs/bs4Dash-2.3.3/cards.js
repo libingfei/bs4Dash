@@ -622,8 +622,8 @@ $.extend(cardSidebarBinding, {
 // Set up easy-close feature outside of the initialize function
 $(document).mouseup(function(e) {
   $("[data-easy-close='true']").each(function() {
-    var container = $(this).find(".direct-chat-contacts"); // 限制在当前遍历的元素内部
-    var openContainer = $(this).find(".direct-chat-contacts-open"); // 限制在当前遍历的元素内部
+    var container = $(this).closest('.bs4Dash').find(".direct-chat-contacts"); // 限制在当前遍历的元素内部
+    var openContainer = $(this).closest('.bs4Dash').find(".direct-chat-contacts-open"); // 限制在当前遍历的元素内部
 
     // 检查鼠标抬起的位置是否在 container 外面，并且不是在 .card-tools 内部
     if (!container.is(e.target) && 
